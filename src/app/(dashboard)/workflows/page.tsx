@@ -1,10 +1,9 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import React, { Suspense } from "react";
 import UserWorkflows from "./_components/UserWorkflows";
+import CreateWorkflowDialog from "./_components/CreateWorkflowDialog";
 
-type Props = {};
-
-const Page = (props: Props) => {
+const Page = () => {
   return (
     <div className="flex-1 flex flex-col h-full">
       <div className="flex justify-between">
@@ -12,6 +11,7 @@ const Page = (props: Props) => {
           <h1 className="text-3xl font-bold">Workflows</h1>
           <p className="text-sm text-muted-foreground">Manage your workflow</p>
         </div>
+        <CreateWorkflowDialog />
       </div>
 
       <div className="h-full py-6">
