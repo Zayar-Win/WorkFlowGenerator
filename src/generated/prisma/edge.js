@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 Object.defineProperty(exports, "__esModule", { value: true });
 
@@ -13,13 +12,17 @@ const {
   empty,
   join,
   raw,
+  skip,
   Decimal,
   Debug,
   objectEnumValues,
   makeStrictEnum,
   Extensions,
+  warnOnce,
   defineDmmfProperty,
   Public,
+  getRuntime,
+  createParam,
 } = require('./runtime/edge.js')
 
 
@@ -80,6 +83,9 @@ Prisma.NullTypes = {
  * Enums
  */
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -97,6 +103,11 @@ exports.Prisma.WorkflowScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
 };
 
 exports.Prisma.NullsOrder = {
@@ -146,17 +157,17 @@ const config = {
   "datasourceNames": [
     "db"
   ],
-  "activeProvider": "sqlite",
+  "activeProvider": "postgresql",
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": null,
-        "value": "file:./dev.db"
+        "fromEnvVar": "DATABASE_URL",
+        "value": "postgresql://workflow_owner:npg_f1FeoKZt9nOq@ep-tight-voice-a4z1wird-pooler.us-east-1.aws.neon.tech/workflow?sslmode=require"
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n  url      = \"file:./dev.db\"\n}\n\nmodel Workflow {\n  id          String   @id @default(cuid())\n  userId      String\n  name        String\n  description String?\n  definition  String\n  status      String\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  @@unique([name, userId])\n}\n",
-  "inlineSchemaHash": "3fcd2d571934b8f794745fc774b14c5689aceb2bd6919e11c47028df9f5317dc",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Workflow {\n  id          String   @id @default(cuid())\n  userId      String\n  name        String\n  description String?\n  definition  String\n  status      String\n  createdAt   DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n\n  @@unique([name, userId])\n}\n",
+  "inlineSchemaHash": "06b9f7aa91cf1f8bc2a4c14628b63e9ef6fe6d902dc2c85746d26962bb783947",
   "copyEngine": true
 }
 config.dirname = '/'
@@ -167,7 +178,9 @@ config.engineWasm = undefined
 config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
-  parsed: {}
+  parsed: {
+    DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_URL || undefined
+  }
 })
 
 if (typeof globalThis !== 'undefined' && globalThis['DEBUG'] || typeof process !== 'undefined' && process.env && process.env.DEBUG || undefined) {

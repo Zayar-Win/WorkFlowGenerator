@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
 
 Object.defineProperty(exports, "__esModule", { value: true });
 
@@ -8,6 +7,7 @@ const {
   makeStrictEnum,
   Public,
   getRuntime,
+  skip
 } = require('./runtime/index-browser.js')
 
 
@@ -111,6 +111,9 @@ Prisma.NullTypes = {
  */
 
 exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 });
 
@@ -130,6 +133,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.QueryMode = {
+  default: 'default',
+  insensitive: 'insensitive'
+};
+
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
@@ -146,7 +154,7 @@ exports.Prisma.ModelName = {
 class PrismaClient {
   constructor() {
     return new Proxy(this, {
-      get() {
+      get(target, prop) {
         let message
         const runtime = getRuntime()
         if (runtime.isEdge) {

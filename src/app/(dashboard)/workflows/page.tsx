@@ -1,4 +1,3 @@
-export const dynamic = "force-dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import React, { Suspense } from "react";
 import UserWorkflows from "./_components/UserWorkflows";
