@@ -1,4 +1,5 @@
 import { TaskType } from "@/lib/helpers/TaskType";
+import { TaskParam } from "@/lib/types";
 import { Node } from "@xyflow/react";
 import React from "react";
 
@@ -7,7 +8,7 @@ export interface AppNodeData {
   // Specifies the type of task this node represents
   type: TaskType;
   // Defines input parameters as key-value pairs of strings
-  input: Record<string, string>;
+  inputs: Record<string, string>;
   // Allows for additional dynamic properties of any type
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
@@ -22,5 +23,11 @@ export interface AppNode extends Node {
 const AppNode = ({}: AppNode) => {
   return <div>appNode</div>;
 };
+
+export interface ParamProp {
+  param: TaskParam;
+  value: string;
+  updateNodeParamsValue: (newValue: string) => void;
+}
 
 export default AppNode;
