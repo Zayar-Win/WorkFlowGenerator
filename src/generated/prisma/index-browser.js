@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 
 Object.defineProperty(exports, "__esModule", { value: true });
 
@@ -7,7 +8,6 @@ const {
   makeStrictEnum,
   Public,
   getRuntime,
-  skip
 } = require('./runtime/index-browser.js')
 
 
@@ -146,7 +146,7 @@ exports.Prisma.ModelName = {
 class PrismaClient {
   constructor() {
     return new Proxy(this, {
-      get(target, prop) {
+      get() {
         let message
         const runtime = getRuntime()
         if (runtime.isEdge) {

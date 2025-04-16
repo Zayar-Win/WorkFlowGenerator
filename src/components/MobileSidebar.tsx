@@ -8,9 +8,7 @@ import { routes } from "./ui/Sidebar";
 import Link from "next/link";
 import { buttonVariants } from "./ui/button";
 
-type Props = {};
-
-const MobileSidebar = (props: Props) => {
+const MobileSidebar = () => {
   const pathName = usePathname();
   const [open, setOpen] = React.useState(false);
   const activeRoute =

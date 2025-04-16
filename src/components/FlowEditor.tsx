@@ -23,11 +23,12 @@ const nodeTypes = {
   Node: NodeComponent,
 };
 
-const FlowEditor = ({ workflow }: Props) => {
+const FlowEditor = ({}: Props) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([
     createFlowNode(TaskType.LAUNCH_BROWSER),
   ]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  console.log(setNodes, setEdges);
   return (
     <div className="w-full h-full ">
       <ReactFlow

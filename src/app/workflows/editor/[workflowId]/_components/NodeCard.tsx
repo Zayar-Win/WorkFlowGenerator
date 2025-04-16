@@ -6,7 +6,11 @@ type Props = {
 };
 
 const NodeCard = ({ children, nodeId }: Props) => {
-  return <div>{children}</div>;
+  return (
+    <div>
+      {children} {nodeId}
+    </div>
+  );
 };
 
 export default NodeCard;

@@ -3,13 +3,13 @@ import db from "@/lib/db";
 import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
-type Props = {
-  params: {
+type PageProps = {
+  params: Promise<{
     workflowId: string;
-  };
+  }>;
 };
-const Page = async ({ params }: Props) => {
-  const { workflowId } = params;
+const Page = async ({ params }: PageProps) => {
+  const { workflowId } = await params;
   const { userId } = await auth();
 
   if (!userId) {
