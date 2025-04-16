@@ -74,7 +74,7 @@ const DeleteWorkflowDialog = ({
           <AlertDialogAction
             onClick={() => mutate(workflowId)}
             className="bg-red-500 text-white"
-            disabled={confirmText !== workflowName}
+            disabled={confirmText !== workflowName || isPending}
           >
             {isPending ? "Deleting" : "Delete"}
           </AlertDialogAction>
