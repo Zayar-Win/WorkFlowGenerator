@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import UserWorkflows from "./_components/UserWorkflows";
 import CreateWorkflowDialog from "./_components/CreateWorkflowDialog";
 
-const Page = () => {
+const Page = async () => {
   return (
     <div className="flex-1 flex flex-col h-full">
       <div className="flex justify-between">
