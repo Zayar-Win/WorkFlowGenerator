@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Skeleton } from "@/components/ui/skeleton";
 import React, { Suspense } from "react";
 import UserWorkflows from "./_components/UserWorkflows";
@@ -23,7 +24,7 @@ const Page = async () => {
   );
 };
 
-const UserWorkflowsSkeleton = () => {
+const UserWorkflowsSkeleton = async () => {
   return (
     <div className="space-y-2">
       {[1, 2, 3, 4, 5].map((i) => (
