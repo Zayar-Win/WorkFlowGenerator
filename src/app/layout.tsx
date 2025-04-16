@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
-import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
 
-const geistSans = Inter({
-  variable: "--font-sans",
-  subsets: ["latin"],
-});
+// const geistSans = Inter({
+//   variable: "--font-sans",
+//   subsets: ["latin"],
+// });
 
-const geistMono = Roboto_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Roboto_Mono({
+//   variable: "--font-mono",
+//   subsets: ["latin"],
+// });
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,9 +35,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={` antialiased`}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
